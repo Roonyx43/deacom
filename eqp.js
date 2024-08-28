@@ -4,23 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para avançar para o próximo campo com Enter
     function avancarParaProximoCampo(event) {
         if (event.key === 'Enter') {
-            event.preventDefault();
+            event.preventDefault(); // Previne o envio do formulário
+
             const formElements = Array.from(event.target.form.elements);
             const index = formElements.indexOf(event.target);
             const nextElement = formElements[index + 1];
 
             if (nextElement) {
-                nextElement.focus();
+                nextElement.focus(); // Muda o foco para o próximo elemento
             }
         }
     }
 
     // Aplicar o evento de teclado a todos os campos de entrada do formulário
+    function aplicarEventoEnter(element) {
+        element.addEventListener('keydown', avancarParaProximoCampo);
+    }
+
+    // Aplica o evento Enter nos campos já existentes
     const formFields = document.querySelectorAll('#form-preencher input, #form-preencher textarea');
-    formFields.forEach(field => {
-        field.addEventListener('keydown', avancarParaProximoCampo);
-    });
-    
+    formFields.forEach(aplicarEventoEnter);
 
     // Adicionar equipamento
     document.getElementById('addEquipamento').addEventListener('click', function() {
@@ -50,8 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             container.appendChild(novoEquipamento);
 
-            // Adiciona o evento ao novo campo de código
+            // Adiciona o evento de busca ao novo campo de código
             document.getElementById(`cd${equipamentoCount}`).addEventListener('blur', buscarEquipamento);
+
+            // Aplica o evento Enter nos novos campos criados
+            const newFields = novoEquipamento.querySelectorAll('input');
+            newFields.forEach(aplicarEventoEnter);
         }
     });
 
