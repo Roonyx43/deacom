@@ -1,4 +1,7 @@
 <?php
+
+header('Content-Type: application/json');
+
 $host = 'autorack.proxy.rlwy.net';
 $dbname = 'railway';
 $username = 'root';
