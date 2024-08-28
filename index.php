@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.25.2/build/docxtemplater.js"></script>
 </head>
-<body>ed
+<body>
     <header>
         <div class="imaged">
 
