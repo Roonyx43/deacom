@@ -78,26 +78,38 @@ document.addEventListener('DOMContentLoaded', function() {
     function buscarEquipamento() {
         const codigo = this.value;
         const eqpIndex = this.dataset.eqp;
-
+    
         if (codigo) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', `buscar_equipamento.php?codigo=${encodeURIComponent(codigo)}`, true);
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-
-                    if (response) {
-                        document.getElementById(`eqp${eqpIndex}`).value = response.descricao;
-                        document.getElementById(`valor${eqpIndex}`).value = response.valor;
-                        document.getElementById(`tip${eqpIndex}`).value = response.unidade;
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+    
+                            if (response) {
+                                document.getElementById(`eqp${eqpIndex}`).value = response.descricao || '';
+                                document.getElementById(`valor${eqpIndex}`).value = response.valor || '';
+                                document.getElementById(`tip${eqpIndex}`).value = response.unidade || '';
+                            } else {
+                                alert('Equipamento não encontrado.');
+                            }
+                        } catch (e) {
+                            console.error('Erro ao parsear JSON:', e);
+                            console.error('Resposta do servidor:', xhr.responseText);
+                            alert('Erro ao buscar o equipamento. A resposta do servidor não está no formato esperado.');
+                        }
                     } else {
-                        alert('Equipamento não encontrado.');
+                        console.error('Erro na requisição:', xhr.statusText);
+                        alert('Erro ao buscar o equipamento. Verifique sua conexão ou entre em contato com o suporte.');
                     }
                 }
             };
             xhr.send();
         }
     }
+
 
     // Adiciona o evento ao primeiro campo de código
     document.getElementById('cd1').addEventListener('blur', buscarEquipamento);
