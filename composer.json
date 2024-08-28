@@ -1,8 +1,4 @@
 {
-    "require": {
-      "php": ">=7.3",
-        "twilio/sdk": "^8.2"
-    },
     "scripts": {
       "start": "php -S 0.0.0.0:8000"
     }
