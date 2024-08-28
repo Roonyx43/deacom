@@ -1,5 +1,4 @@
 <?php
-
 header('Content-Type: application/json');
 
 $host = 'autorack.proxy.rlwy.net';
@@ -11,7 +10,8 @@ $port = 31283;
 $conn = new mysqli($host, $username, $password, $dbname, $port);
 
 if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
+    echo json_encode(['error' => 'Erro de conexão: ' . $conn->connect_error]);
+    exit;
 }
 
 if (isset($_GET['codigo'])) {
@@ -23,8 +23,10 @@ if (isset($_GET['codigo'])) {
         $row = $result->fetch_assoc();
         echo json_encode($row);
     } else {
-        echo json_encode(null);
+        echo json_encode(null); // Retorna null se não houver equipamento
     }
+} else {
+    echo json_encode(['error' => 'Código não fornecido']);
 }
 
 $conn->close();
