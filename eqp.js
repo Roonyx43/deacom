@@ -93,13 +93,17 @@ document.addEventListener('DOMContentLoaded', function() {
             "janeiro", "fevereiro", "março", "abril", "maio", "junho",
             "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
         ];
-        
+    
+        // Ajuste o horário para evitar o deslocamento
+        data.setHours(data.getHours() + data.getTimezoneOffset() / 60);
+    
         const dia = data.getDate();
         const mes = meses[data.getMonth()];
         const ano = data.getFullYear();
-    
+
         return `${dia} de ${mes} de ${ano}`;
     }
+
     
 
     // Evento para buscar equipamento ao perder o foco (blur) do campo de código
